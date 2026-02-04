@@ -1,0 +1,49 @@
+List of APIs -
+
+-->  USER AUTHENTICATION AND MANAGEMENT
+
+1. POST /auth/signup --> Register user { name, phone, email, password, location }
+2. POST /auth/login  --> Login user { phone/email, password }
+3. GET /auth/me  --> Get logged-in user profile Header: Authorization token
+4. PUT /auth/me --> Update user profile { name, location, preferences }
+
+
+-->  REQUESTS (request creating and lender responding)
+
+1. POST /requests --> Borrower creates a new item request {itemName, itemCategory, rentalStart, rentalEnd, location, notes}
+2. GET /requests/borrower --> 	Get all requests created by borrower (Header Auth, Query: status, pagination)
+3. GET /requests/lender --> Get all active requests near lender's location (filtered by preferences, Header Auth, Query: location, categories, pagination) 
+4. POST /requests/{requestId}/respond --> Lender responds to a request with offer {itemName, photos: [], conditionDesc, rental amount per hr, notes}
+5. GET /requests/{requestId}/offers --> Borrower views all offers received for request (Header Auth)
+6. POST /requests/{requestId}/accept --> Borrower accepts lender’s offer	{ lenderId }
+7. POST /requests/{requestId}/cancel --> Borrower cancels the request
+8. GET /requests/{requestId} --> Get detailed request info (including offers)	Header Auth
+
+
+-->  User Preferences & Notifications
+
+1. GET /preferences --> Get user notification preferences	Header Auth
+2. PUT /preferences --> Update notification preferences         { categories: [], notifyFrequency: "instant"}
+
+--> Messaging 
+
+1. GET /chat/threads --> Get chat threads for user	Header Auth
+2. GET /chat/threads/{threadId} --> Get messages in a chat thread	Header Auth
+3. POST /chat/threads/{threadId}/messages --> Send message in chat thread	{ message }
+4. POST /chat/threads --> Start new chat thread (optional)	{ participantIds: [] }
+
+
+--> Payments
+
+1. POST /payments/initiate --> Start a payment transaction	{ requestId, amount, paymentMethod }
+2. POST /payments/webhook --> Payment gateway webhook for status updates	{ paymentStatus, transactionId, requestId }
+3. GET /payments/history --> Get payment history of user	Header Auth
+
+--> Ratings & Reviews
+
+1. POST /ratings --> Submit rating & review for rental	{ requestId, toUserId, rating, review }
+2. GET /ratings/user/{userId}  --> Get ratings & reviews for a user
+
+-->  Location & Geospatial
+
+1. GET /location/nearby-requests --> Get requests near a given location (for lenders)	?lat={lat}&lng={lng}&radius={km}

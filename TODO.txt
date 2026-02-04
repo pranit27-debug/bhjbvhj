@@ -1,0 +1,6 @@
+-->  AUTHENTICATION
+1. Implement Forgot password
+2. Implement Google and apple login
+3. Have implemented verify email but email is not being received at receiver side, so implement other method to do it.
+4. Implement logout function using protected route method
+5. Implement the read message function
